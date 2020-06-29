@@ -8,7 +8,40 @@ private:
     char grid[3][3];
 
 public: 
+    void check_for_win(){
+        const char* winning_moves[8]={
+            "123","456","789","147","258","369","159","753"
+        };
+        for (int i=0; i<8;i++){
+            bool winner = true;
+            char previous_grid = '0';
+            const char* winning_move = winning_moves[i];
 
+            for(int index =0; index<3; index++){
+                char character = winning_move[index];
+                int entered_number = character-'0';
+                int grid_space = entered_number-1;
+                int row = grid_space / 3;
+                int col = grid_space % 3;
+                char grid_char = grid[row][col];
+                if(previous_grid == '0'){
+                    previous_grid=grid_char;
+                }
+                else if (previous_grid == grid_char){
+                    continue;
+                }else{
+                    winner = false;
+                    break;
+                }
+            }
+            if( winner){
+                puts("***We have a winner! ***");
+                printf("Looks like %c won, congratulation!\n", previous_grid);
+                exit(0);
+                break;
+            }
+        }
+    }
     void ask_turn(){
         string input;
         while(true){
@@ -67,6 +100,7 @@ public:
         generate_grid();
 
         while (true){
+            check_for_win();
             show_grid();
             ask_turn();
         }
@@ -76,8 +110,6 @@ public:
 
 int main( int argc, char *argv[] )
 {
-    
     game game;
-
     return 0;
 }
