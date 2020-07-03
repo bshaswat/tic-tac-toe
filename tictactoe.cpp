@@ -110,6 +110,6 @@ public:
 
 int main( int argc, char *argv[] )
 {
-    game game;
+    game game1;
     return 0;
 }
