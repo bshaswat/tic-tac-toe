@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <ctime>
 using namespace std;
 
 class game{
@@ -76,6 +77,25 @@ public:
         }
     }
 
+    void computer_player_turn(){
+        while( true ){
+
+        
+            int computer_choice = ( rand() % 9 ) + 1;
+            int row = (computer_choice -1) / 3;
+            int col = (computer_choice -1) % 3;
+            char grid_position = grid[row][col];
+            if (grid_position == 'X' || grid_position == 'O'){
+                continue;
+            }else{
+                printf("The computer will play at %d.\n", computer_choice);
+                grid[row][col]= 'O';
+                break;
+            }
+
+        }
+    }
+
     void generate_grid(){
         int number=1;
         for ( int i=0; i<3; i++ ){
@@ -87,29 +107,35 @@ public:
     }
     
     void show_grid(){
-        printf("\n-----------\n");
+        printf("\n-------------\n");
         for ( int i=0; i<3; i++ ){
+            printf("|");
             for ( int j=0; j<3; j++ ){
                 printf(" %c |", grid[i][j]);
             }
-            printf("\n-----------\n");
+            printf("\n-------------\n");
         }
     }
 
     game(){
         generate_grid();
-
+        show_grid();
+        check_for_win();
         while (true){
-            check_for_win();
-            show_grid();
             ask_turn();
+            check_for_win();
+            
+            computer_player_turn();
+            show_grid();
+            check_for_win();
         }
         
     }
 };
 
-int main( int argc, char *argv[] )
+int main( int argc, char* argv[] )
 {
+    srand(time(0));
     game game1;
     return 0;
 }
